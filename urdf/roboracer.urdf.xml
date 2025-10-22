@@ -1,0 +1,231 @@
+<robot name="roboracer">
+
+  <link name="base">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/base.stl" />
+      </geometry>
+      <material name="gray">
+        <color rgba=".2 .2 .2 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/base.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+</link>
+
+  <link name="body">
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/body.stl" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/body.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="body_connect" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base"/>
+    <child link="body"/>
+  </joint>
+
+  <link name="camera_frame">
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/camera.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/camera.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="camera_connect" type="fixed">
+    <origin xyz="0.23 0 -0.075" rpy="0 0 0" />
+    <parent link="base"/>
+    <child link="camera_frame"/>
+  </joint>
+
+  <link name="hokuyo">
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/hokuyo_ust-10xl.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/hokuyo_ust-10xl.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="hokuyo_connect" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base"/>
+    <child link="hokuyo"/>
+  </joint>
+
+  <!-- Static frame for the laser sensor (TF frame name: 'laser') -->
+  <link name="laser">
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+      <origin/>
+    </inertial>
+  </link>
+
+  <joint name="laser_connect" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="hokuyo"/>
+    <child link="laser"/>
+  </joint>
+
+  <link name="wheel_fl">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="5e-4" ixy="0" ixz="0" iyy="5e-4" iyz="0" izz="5e-4" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_fl_connect" type="revolute">
+    <origin xyz="0.1 0.16 -0.01" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.5236" upper="0.5236" effort="5" velocity="1.0" />
+    <parent link="base"/>
+    <child link="wheel_fl"/>
+  </joint>
+
+  <link name="wheel_fr">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="5e-4" ixy="0" ixz="0" iyy="5e-4" iyz="0" izz="5e-4" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_fr_connect" type="revolute">
+    <origin xyz="0.1 -0.16 -0.01" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.5236" upper="0.5236" effort="5" velocity="1.0" />
+    <parent link="base"/>
+    <child link="wheel_fr"/>
+  </joint>
+
+  <link name="wheel_bl">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="5e-4" ixy="0" ixz="0" iyy="5e-4" iyz="0" izz="5e-4" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_bl_connect" type="fixed">
+    <origin xyz="-0.1 0.16 -0.01" rpy="0 0 0" />
+    <parent link="base"/>
+    <child link="wheel_bl"/>
+  </joint>
+
+  <link name="wheel_br">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="5e-4" ixy="0" ixz="0" iyy="5e-4" iyz="0" izz="5e-4" />
+      <origin/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin />
+      <geometry>
+        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+      </geometry>
+      <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
+    </collision>
+  </link>
+
+  <joint name="wheel_br_connect" type="fixed">
+    <origin xyz="-0.1 -0.16 -0.01" rpy="0 0 0" />
+    <parent link="base"/>
+    <child link="wheel_br"/>
+  </joint>
+
+</robot>
