@@ -69,7 +69,7 @@
   </link>
 
   <joint name="camera_connect" type="fixed">
-    <origin xyz="0.23 0 -0.075" rpy="0 0 0" />
+    <origin xyz="0.23 0 -0.075" rpy="4.7124 0 4.7124" />
     <parent link="base"/>
     <child link="camera_frame"/>
   </joint>
