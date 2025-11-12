@@ -1,10 +1,10 @@
 <robot name="roboracer">
 
-  <link name="base">
+  <link name="base_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/base.stl" />
+        <mesh filename="package://av_description/meshes/base.stl" />
       </geometry>
       <material name="gray">
         <color rgba=".2 .2 .2 1" />
@@ -13,7 +13,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/base.stl" />
+        <mesh filename="package://av_description/meshes/base.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -28,14 +28,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/body.stl" />
+        <mesh filename="package://av_description/meshes/body.stl" />
       </geometry>
       <material name="gray" />
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/body.stl" />
+        <mesh filename="package://av_description/meshes/body.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -43,7 +43,7 @@
 
   <joint name="body_connect" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="body"/>
   </joint>
 
@@ -56,13 +56,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/camera.stl" />
+        <mesh filename="package://av_description/meshes/camera.stl" />
       </geometry>
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/camera.stl" />
+        <mesh filename="package://av_description/meshes/camera.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -70,7 +70,7 @@
 
   <joint name="camera_connect" type="fixed">
     <origin xyz="0.23 0 -0.075" rpy="4.7124 0 4.7124" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="camera_frame"/>
   </joint>
 
@@ -83,13 +83,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/hokuyo_ust-10xl.stl" />
+        <mesh filename="package://av_description/meshes/hokuyo_ust-10xl.stl" />
       </geometry>
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/hokuyo_ust-10xl.stl" />
+        <mesh filename="package://av_description/meshes/hokuyo_ust-10xl.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -97,7 +97,7 @@
 
   <joint name="hokuyo_connect" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="hokuyo"/>
   </joint>
 
@@ -125,13 +125,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -141,7 +141,7 @@
     <origin xyz="0.1 0.16 -0.01" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <limit lower="-0.5236" upper="0.5236" effort="5" velocity="1.0" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="wheel_fl"/>
   </joint>
 
@@ -154,13 +154,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -170,7 +170,7 @@
     <origin xyz="0.1 -0.16 -0.01" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <limit lower="-0.5236" upper="0.5236" effort="5" velocity="1.0" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="wheel_fr"/>
   </joint>
 
@@ -183,13 +183,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -197,7 +197,7 @@
 
   <joint name="wheel_bl_connect" type="fixed">
     <origin xyz="-0.1 0.16 -0.01" rpy="0 0 0" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="wheel_bl"/>
   </joint>
 
@@ -210,13 +210,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
     </visual>
     <collision>
       <origin />
       <geometry>
-        <mesh filename="package://roboracer_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -224,7 +224,7 @@
 
   <joint name="wheel_br_connect" type="fixed">
     <origin xyz="-0.1 -0.16 -0.01" rpy="0 0 0" />
-    <parent link="base"/>
+    <parent link="base_link"/>
     <child link="wheel_br"/>
   </joint>
 

@@ -1,10 +1,10 @@
 from setuptools import find_packages, setup
 
-package_name = "roboracer_description"
+package_name = "av_description"
 
 setup(
     name=package_name,
-    version="0.0.0",
+    version="0.0.1",
     packages=find_packages(exclude=["test"]),
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
@@ -37,7 +37,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "state_publisher = roboracer_description.state_publisher:main",
+            "state_publisher = av_description.state_publisher:main",
         ],
     },
 )

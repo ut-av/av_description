@@ -12,7 +12,7 @@ def generate_launch_description():
 
     urdf_file_name = "urdf/roboracer.urdf.xml"
     urdf = os.path.join(
-        get_package_share_directory("roboracer_description"), urdf_file_name
+        get_package_share_directory("av_description"), urdf_file_name
     )
     with open(urdf, "r") as infp:
         robot_desc = infp.read()
@@ -35,7 +35,7 @@ def generate_launch_description():
                 arguments=[urdf],
             ),
             Node(
-                package="roboracer_description",
+                package="av_description",
                 executable="state_publisher",
                 name="state_publisher",
                 output="screen",
