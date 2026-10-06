@@ -1,0 +1,6 @@
+kind: package
+name: av_description
+dependencies:
+- rclpy
+source_path: .
+ros_distro: jazzy
