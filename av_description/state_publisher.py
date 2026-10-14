@@ -26,8 +26,9 @@ class SteeringStatePublisher(Node):
         qos = QoSProfile(depth=10)
         self.joint_pub = self.create_publisher(JointState, "joint_states", qos)
 
-        # parameter for wheelbase (meters). Default to 0.2 if not provided.
-        self.declare_parameter("wheelbase", 0.2)
+        # parameter for wheelbase (meters). Default: the car's 0.324 m, as in
+        # ut_automata's vesc.lua and the URDF's wheel positions.
+        self.declare_parameter("wheelbase", 0.324)
         self.wheelbase = float(self.get_parameter("wheelbase").value)
 
         # current steering angle
