@@ -1,19 +1,40 @@
 <robot name="roboracer">
 
+  <!--
+    The meshes come from CAD in millimetres, hence scale 0.001.
+
+    base_link is the centre of the lidar's scan. base.stl (the plate) and
+    body.stl (the shell over it) share the CAD's axes: x is the car's left, y
+    points to the back, z is up, and the origin is under the middle of the
+    plate. Their origin below turns that so the car faces +x, and puts the
+    lidar in the shell's square opening (31 mm behind the middle of the plate)
+    at 92.8 mm above the plate's underside, which puts the camera lens 75 mm
+    below the lidar, as camera_connect says.
+
+    The camera and lidar meshes are placed on their own frames instead: the
+    lens at camera_frame's origin, and the lidar's scan plane (about 50 mm
+    above its base) at z = 0.
+  -->
+
+  <!-- Colours of the real car's parts. -->
+  <material name="plywood"><color rgba="0.76 0.60 0.42 1"/></material>
+  <material name="shell"><color rgba="0.35 0.35 0.38 1"/></material>
+  <material name="circuit_board"><color rgba="0.10 0.45 0.20 1"/></material>
+  <material name="lidar"><color rgba="0.95 0.50 0.10 1"/></material>
+  <material name="tire"><color rgba="0.12 0.12 0.12 1"/></material>
+
   <link name="base_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="0.031 0 -0.0928" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/base.stl" />
+        <mesh filename="package://av_description/meshes/base.stl" scale="0.001 0.001 0.001" />
       </geometry>
-      <material name="gray">
-        <color rgba=".2 .2 .2 1" />
-      </material>
+      <material name="plywood"/>
     </visual>
     <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="0.031 0 -0.0928" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/base.stl" />
+        <mesh filename="package://av_description/meshes/base.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -26,16 +47,16 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0.031 0 -0.0928" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/body.stl" />
+        <mesh filename="package://av_description/meshes/body.stl" scale="0.001 0.001 0.001" />
       </geometry>
-      <material name="gray" />
+      <material name="shell"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0.031 0 -0.0928" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/body.stl" />
+        <mesh filename="package://av_description/meshes/body.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -54,15 +75,16 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0.0178 -0.218" rpy="-1.5708 0 3.1416"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/camera.stl" />
+        <mesh filename="package://av_description/meshes/camera.stl" scale="0.001 0.001 0.001" />
       </geometry>
+      <material name="circuit_board"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0 0.0178 -0.218" rpy="-1.5708 0 3.1416"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/camera.stl" />
+        <mesh filename="package://av_description/meshes/camera.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -81,15 +103,16 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 -0.05" rpy="1.5708 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/hokuyo_ust-10xl.stl" />
+        <mesh filename="package://av_description/meshes/hokuyo_ust-10xl.stl" scale="0.001 0.001 0.001" />
       </geometry>
+      <material name="lidar"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0 0 -0.05" rpy="1.5708 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/hokuyo_ust-10xl.stl" />
+        <mesh filename="package://av_description/meshes/hokuyo_ust-10xl.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
@@ -116,6 +139,13 @@
     <child link="laser"/>
   </joint>
 
+  <!--
+    Wheels: the car's 0.324 m wheelbase (wheelbase in ut_automata's vesc.lua),
+    centred on the plate, and about a 0.24 m track, estimated from photos. The
+    wheel tops are level with the underside of the plate, so the ground is
+    about 0.18 m below the lidar. wheel.stl's axle is its x axis, hence the
+    yaw of 90 degrees.
+  -->
   <link name="wheel_fl">
     <inertial>
       <mass value="0.5"/>
@@ -123,22 +153,23 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
+      <material name="tire"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
   </link>
 
   <joint name="wheel_fl_connect" type="revolute">
-    <origin xyz="0.1 0.16 -0.01" rpy="0 0 0" />
+    <origin xyz="0.193 0.12 -0.138" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <limit lower="-0.5236" upper="0.5236" effort="5" velocity="1.0" />
     <parent link="base_link"/>
@@ -152,22 +183,23 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
+      <material name="tire"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
   </link>
 
   <joint name="wheel_fr_connect" type="revolute">
-    <origin xyz="0.1 -0.16 -0.01" rpy="0 0 0" />
+    <origin xyz="0.193 -0.12 -0.138" rpy="0 0 0" />
     <axis xyz="0 0 1" />
     <limit lower="-0.5236" upper="0.5236" effort="5" velocity="1.0" />
     <parent link="base_link"/>
@@ -181,22 +213,23 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
+      <material name="tire"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
   </link>
 
   <joint name="wheel_bl_connect" type="fixed">
-    <origin xyz="-0.1 0.16 -0.01" rpy="0 0 0" />
+    <origin xyz="-0.131 0.12 -0.138" rpy="0 0 0" />
     <parent link="base_link"/>
     <child link="wheel_bl"/>
   </joint>
@@ -208,22 +241,23 @@
       <origin/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
+      <material name="tire"/>
     </visual>
     <collision>
-      <origin />
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://av_description/meshes/wheel.stl" />
+        <mesh filename="package://av_description/meshes/wheel.stl" scale="0.001 0.001 0.001" />
       </geometry>
       <contact_coefficients mu="0" kp="1000.0" kd="1.0"/>
     </collision>
   </link>
 
   <joint name="wheel_br_connect" type="fixed">
-    <origin xyz="-0.1 -0.16 -0.01" rpy="0 0 0" />
+    <origin xyz="-0.131 -0.12 -0.138" rpy="0 0 0" />
     <parent link="base_link"/>
     <child link="wheel_br"/>
   </joint>
